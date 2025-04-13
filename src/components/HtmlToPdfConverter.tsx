@@ -117,7 +117,7 @@ const HtmlToPdfConverter: React.FC<HtmlToPdfConverterProps> = ({ isDarkMode }) =
                     Convert your HTML code to PDF format. Enter HTML code in the textarea below and click the convert button.
                 </p>
                 <textarea
-                    className="w-full h-[32rem] p-4 border rounded bg-white text-gray-800 text-base"
+                    className={`w-full h-[32rem] p-4 border rounded ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} text-base`}
                     value={htmlContent}
                     onChange={handleHtmlChange}
                     placeholder="Enter HTML code here..."
@@ -147,7 +147,7 @@ const HtmlToPdfConverter: React.FC<HtmlToPdfConverterProps> = ({ isDarkMode }) =
                     <h3 className="text-xl font-semibold mb-4 text-center">Preview</h3>
                     <iframe
                         src={pdfUrl}
-                        className="w-full h-[48rem] border rounded bg-white"
+                        className={`w-full h-[48rem] border rounded ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
                         title="PDF Preview"
                     />
                 </div>
