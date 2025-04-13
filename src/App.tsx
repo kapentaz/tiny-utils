@@ -8,7 +8,22 @@ import ListComparator from "./components/ListComparator";
 import MarkdownPreview from "./components/MarkdownPreview";
 
 function MainContent() {
-    const [darkMode, setDarkMode] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        // 로컬스토리지에서 다크모드 설정을 불러옴
+        const savedMode = localStorage.getItem('darkMode');
+        // 저장된 값이 있으면 그 값을 사용하고, 없으면 시스템 설정을 따름
+        return savedMode !== null ? savedMode === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    });
+
+    const toggleDarkMode = () => {
+        setIsDarkMode(prev => {
+            const newMode = !prev;
+            // 다크모드 설정을 로컬스토리지에 저장
+            localStorage.setItem('darkMode', String(newMode));
+            return newMode;
+        });
+    };
+
     const navigate = useNavigate();
     const location = useLocation();
     const [activeTab, setActiveTab] = useState("timestamp");
@@ -27,14 +42,23 @@ function MainContent() {
 
     return (
         <div className="min-h-screen w-full">
-            <div className={`${darkMode ? "bg-black text-white" : "bg-white text-black"} min-h-screen w-full transition-colors duration-300 flex flex-col items-center`}>
+            <div className={`${isDarkMode ? "bg-black text-white" : "bg-white text-black"} min-h-screen w-full transition-colors duration-300 flex flex-col items-center`}>
                 {/* 다크모드 버튼 */}
-                <button
-                    onClick={() => setDarkMode(!darkMode)}
-                    className="absolute top-4 right-4 px-4 py-2 rounded border border-gray-400 text-sm"
-                >
-                    {darkMode ? "☀️ Light Mode" : <span className="text-white">🌙 Dark Mode</span>}
-                </button>
+                <div className="absolute top-4 right-4 flex items-center gap-4">
+                    <a
+                        href="mailto:kapentaz@gmail.com"
+                        className="px-4 py-2 rounded border border-gray-400 text-sm"
+                        title="Send email"
+                    >
+                        ✉️ Contact
+                    </a>
+                    <button
+                        onClick={toggleDarkMode}
+                        className="px-4 py-2 rounded border border-gray-400 text-sm"
+                    >
+                        {isDarkMode ? "☀️ Light Mode" : <span className="text-white">🌙 Dark Mode</span>}
+                    </button>
+                </div>
 
                 {/* 콘텐츠 */}
                 <div className="w-full max-w-[95%] mx-auto">
@@ -43,12 +67,12 @@ function MainContent() {
                     </div>
                     
                     <div className="mt-4">
-                        {activeTab === "timestamp" && <div className="max-w-2xl mx-auto"><TimestampConverter isDarkMode={darkMode} /></div>}
-                        {activeTab === "format" && <DateFormatterPreview isDarkMode={darkMode} />}
-                        {activeTab === "html2pdf" && <div className="max-w-[80%] mx-auto"><HtmlToPdfConverter isDarkMode={darkMode} /></div>}
-                        {activeTab === "duplicate" && <DuplicateChecker isDarkMode={darkMode} />}
-                        {activeTab === "compare" && <ListComparator isDarkMode={darkMode} />}
-                        {activeTab === "markdown" && <MarkdownPreview isDarkMode={darkMode} />}
+                        {activeTab === "timestamp" && <div className="max-w-2xl mx-auto"><TimestampConverter isDarkMode={isDarkMode} /></div>}
+                        {activeTab === "format" && <DateFormatterPreview isDarkMode={isDarkMode} />}
+                        {activeTab === "html2pdf" && <div className="max-w-[80%] mx-auto"><HtmlToPdfConverter isDarkMode={isDarkMode} /></div>}
+                        {activeTab === "duplicate" && <DuplicateChecker isDarkMode={isDarkMode} />}
+                        {activeTab === "compare" && <ListComparator isDarkMode={isDarkMode} />}
+                        {activeTab === "markdown" && <MarkdownPreview isDarkMode={isDarkMode} />}
                     </div>
 
                     <div className="flex gap-4 mt-8 justify-center">

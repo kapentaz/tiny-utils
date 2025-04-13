@@ -185,7 +185,10 @@ export default function DateFormatterPreview({ isDarkMode = false }: { isDarkMod
 
   return (
     <div className="p-4 flex flex-col items-center">
-      <h2 className="text-xl font-bold mb-2">📅 Date Format Preview</h2>
+      <h2 className="text-3xl font-bold mb-2">📅 Date Format Preview</h2>
+      <p className="text-center text-gray-600 mb-6">
+        Preview date and time formats for different programming languages. Select a language to see its supported formats.
+      </p>
 
       <div className="flex flex-wrap justify-center gap-2 mb-4">
         {(Object.keys(FORMAT_TYPES) as Array<keyof FormatTypes>).map((tab) => (

@@ -41,7 +41,10 @@ export default function TimestampConverter({ isDarkMode = false }: { isDarkMode?
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-2">⏰ Unix Timestamp Converter</h2>
+            <h2 className="text-3xl font-bold mb-2 text-center">⏰ Unix Timestamp Converter</h2>
+            <p className="text-center text-gray-600 mb-6">
+                Convert Unix timestamps to human-readable dates and times. Enter a Unix timestamp to see its corresponding date and time.
+            </p>
             <input
                 type="text"
                 value={timestamp}
