@@ -60,23 +60,6 @@ function ListComparator({ isDarkMode }: ListComparatorProps) {
         });
     };
 
-    const removeDuplicates = (setName: keyof typeof sortOrders) => {
-        switch (setName) {
-            case 'onlyInA':
-                setOnlyInA([...new Set(onlyInA)]);
-                break;
-            case 'onlyInB':
-                setOnlyInB([...new Set(onlyInB)]);
-                break;
-            case 'intersection':
-                setIntersection([...new Set(intersection)]);
-                break;
-            case 'union':
-                setUnion([...new Set(union)]);
-                break;
-        }
-    };
-
     const compareLists = () => {
         // 입력된 텍스트를 콤마나 엔터 기준으로 분리하고 공백 제거
         const itemsA = listA.split(/[\n,]/).map(item => item.trim()).filter(item => item);
