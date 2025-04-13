@@ -127,7 +127,7 @@ or
 item1
 item2
 item3"
-                        className="w-full h-[24rem] p-4 border rounded bg-white text-gray-800 border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                        className={`w-full h-[24rem] p-4 border rounded ${isDarkMode ? 'bg-gray-800 text-white border-gray-600' : 'bg-white text-gray-800 border-gray-300'} focus:border-blue-500 focus:ring-1 focus:ring-blue-500`}
                     />
                 </div>
                 <div>
@@ -140,7 +140,7 @@ or
 item1
 item2
 item3"
-                        className="w-full h-[24rem] p-4 border rounded bg-white text-gray-800 border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                        className={`w-full h-[24rem] p-4 border rounded ${isDarkMode ? 'bg-gray-800 text-white border-gray-600' : 'bg-white text-gray-800 border-gray-300'} focus:border-blue-500 focus:ring-1 focus:ring-blue-500`}
                     />
                 </div>
             </div>
@@ -163,7 +163,7 @@ item3"
                             <SortButton setName="onlyInA" />
                         </div>
                     </div>
-                    <div className="h-[24rem] p-4 border rounded overflow-auto bg-white">
+                    <div className={`h-[24rem] p-4 border rounded overflow-auto ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white'}`}>
                         {onlyInA.map((item, index) => (
                             <div key={index} className="mb-2">{item}</div>
                         ))}
@@ -176,7 +176,7 @@ item3"
                             <SortButton setName="onlyInB" />
                         </div>
                     </div>
-                    <div className="h-[24rem] p-4 border rounded overflow-auto bg-white">
+                    <div className={`h-[24rem] p-4 border rounded overflow-auto ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white'}`}>
                         {onlyInB.map((item, index) => (
                             <div key={index} className="mb-2">{item}</div>
                         ))}
@@ -189,7 +189,7 @@ item3"
                             <SortButton setName="intersection" />
                         </div>
                     </div>
-                    <div className="h-[24rem] p-4 border rounded overflow-auto bg-white">
+                    <div className={`h-[24rem] p-4 border rounded overflow-auto ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white'}`}>
                         {intersection.map((item, index) => (
                             <div key={index} className="mb-2">{item}</div>
                         ))}
@@ -202,7 +202,7 @@ item3"
                             <SortButton setName="union" />
                         </div>
                     </div>
-                    <div className="h-[24rem] p-4 border rounded overflow-auto bg-white">
+                    <div className={`h-[24rem] p-4 border rounded overflow-auto ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white'}`}>
                         {union.map((item, index) => (
                             <div key={index} className="mb-2">{item}</div>
                         ))}

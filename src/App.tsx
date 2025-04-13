@@ -5,7 +5,6 @@ import DateFormatterPreview from "./components/DateFormatterPreview";
 import HtmlToPdfConverter from "./components/HtmlToPdfConverter";
 import DuplicateChecker from "./components/DuplicateChecker";
 import ListComparator from "./components/ListComparator";
-import MarkdownPreview from "./components/MarkdownPreview";
 
 // 레이아웃 컴포넌트
 function Layout({ children, isDarkMode, toggleDarkMode }: { 
@@ -90,12 +89,6 @@ function Layout({ children, isDarkMode, toggleDarkMode }: {
                         >
                             🔄 List Comparator
                         </button>
-                        <button
-                            onClick={() => handleTabChange("markdown")}
-                            className={`px-4 py-2 rounded text-sm font-medium ${activeTab === "markdown" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-800"}`}
-                        >
-                            📝 Markdown Preview
-                        </button>
                     </div>
                 </div>
             </div>
@@ -154,11 +147,6 @@ export default function App() {
                 <Route path="/compare" element={
                     <Layout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
                         <ListComparator isDarkMode={isDarkMode} />
-                    </Layout>
-                } />
-                <Route path="/markdown" element={
-                    <Layout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
-                        <MarkdownPreview isDarkMode={isDarkMode} />
                     </Layout>
                 } />
             </Routes>
