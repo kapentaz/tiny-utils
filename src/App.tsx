@@ -7,23 +7,12 @@ import DuplicateChecker from "./components/DuplicateChecker";
 import ListComparator from "./components/ListComparator";
 import MarkdownPreview from "./components/MarkdownPreview";
 
-function MainContent() {
-    const [isDarkMode, setIsDarkMode] = useState(() => {
-        // 로컬스토리지에서 다크모드 설정을 불러옴
-        const savedMode = localStorage.getItem('darkMode');
-        // 저장된 값이 있으면 그 값을 사용하고, 없으면 시스템 설정을 따름
-        return savedMode !== null ? savedMode === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-    });
-
-    const toggleDarkMode = () => {
-        setIsDarkMode(prev => {
-            const newMode = !prev;
-            // 다크모드 설정을 로컬스토리지에 저장
-            localStorage.setItem('darkMode', String(newMode));
-            return newMode;
-        });
-    };
-
+// 레이아웃 컴포넌트
+function Layout({ children, isDarkMode, toggleDarkMode }: { 
+    children: React.ReactNode;
+    isDarkMode: boolean;
+    toggleDarkMode: () => void;
+}) {
     const navigate = useNavigate();
     const location = useLocation();
     const [activeTab, setActiveTab] = useState("timestamp");
@@ -67,12 +56,7 @@ function MainContent() {
                     </div>
                     
                     <div className="mt-4">
-                        {activeTab === "timestamp" && <div className="max-w-2xl mx-auto"><TimestampConverter isDarkMode={isDarkMode} /></div>}
-                        {activeTab === "format" && <DateFormatterPreview isDarkMode={isDarkMode} />}
-                        {activeTab === "html2pdf" && <div className="max-w-[80%] mx-auto"><HtmlToPdfConverter isDarkMode={isDarkMode} /></div>}
-                        {activeTab === "duplicate" && <DuplicateChecker isDarkMode={isDarkMode} />}
-                        {activeTab === "compare" && <ListComparator isDarkMode={isDarkMode} />}
-                        {activeTab === "markdown" && <MarkdownPreview isDarkMode={isDarkMode} />}
+                        {children}
                     </div>
 
                     <div className="flex gap-4 mt-8 justify-center">
@@ -106,6 +90,12 @@ function MainContent() {
                         >
                             🔄 List Comparator
                         </button>
+                        <button
+                            onClick={() => handleTabChange("markdown")}
+                            className={`px-4 py-2 rounded text-sm font-medium ${activeTab === "markdown" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-800"}`}
+                        >
+                            📝 Markdown Preview
+                        </button>
                     </div>
                 </div>
             </div>
@@ -114,16 +104,63 @@ function MainContent() {
 }
 
 export default function App() {
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        const savedMode = localStorage.getItem('darkMode');
+        return savedMode !== null ? savedMode === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    });
+
+    const toggleDarkMode = () => {
+        setIsDarkMode(prev => {
+            const newMode = !prev;
+            localStorage.setItem('darkMode', String(newMode));
+            return newMode;
+        });
+    };
+
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<MainContent />} />
-                <Route path="/timestamp" element={<MainContent />} />
-                <Route path="/format" element={<MainContent />} />
-                <Route path="/html2pdf" element={<MainContent />} />
-                <Route path="/duplicate" element={<MainContent />} />
-                <Route path="/compare" element={<MainContent />} />
-                <Route path="/markdown" element={<MainContent />} />
+                <Route path="/" element={
+                    <Layout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
+                        <div className="max-w-2xl mx-auto">
+                            <TimestampConverter isDarkMode={isDarkMode} />
+                        </div>
+                    </Layout>
+                } />
+                <Route path="/timestamp" element={
+                    <Layout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
+                        <div className="max-w-2xl mx-auto">
+                            <TimestampConverter isDarkMode={isDarkMode} />
+                        </div>
+                    </Layout>
+                } />
+                <Route path="/format" element={
+                    <Layout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
+                        <DateFormatterPreview isDarkMode={isDarkMode} />
+                    </Layout>
+                } />
+                <Route path="/html2pdf" element={
+                    <Layout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
+                        <div className="max-w-[80%] mx-auto">
+                            <HtmlToPdfConverter isDarkMode={isDarkMode} />
+                        </div>
+                    </Layout>
+                } />
+                <Route path="/duplicate" element={
+                    <Layout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
+                        <DuplicateChecker isDarkMode={isDarkMode} />
+                    </Layout>
+                } />
+                <Route path="/compare" element={
+                    <Layout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
+                        <ListComparator isDarkMode={isDarkMode} />
+                    </Layout>
+                } />
+                <Route path="/markdown" element={
+                    <Layout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
+                        <MarkdownPreview isDarkMode={isDarkMode} />
+                    </Layout>
+                } />
             </Routes>
         </BrowserRouter>
     );

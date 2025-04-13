@@ -87,7 +87,11 @@ const FORMAT_TYPES: FormatTypes = {
   ]
 };
 
-export default function DateFormatterPreview({ isDarkMode = false }: { isDarkMode?: boolean } = {}) {
+interface DateFormatterPreviewProps {
+  isDarkMode: boolean;
+}
+
+export default function DateFormatterPreview({ isDarkMode }: DateFormatterPreviewProps) {
   const [selectedTab, setSelectedTab] = useState<keyof FormatTypes>("JavaScript (Day.js)");
   const [formattedDates, setFormattedDates] = useState<string[]>([]);
 
