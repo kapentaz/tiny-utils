@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import html2pdf from 'html2pdf.js';
 
-const HtmlToPdfConverter: React.FC = () => {
+interface HtmlToPdfConverterProps {
+    isDarkMode: boolean;
+}
+
+const HtmlToPdfConverter: React.FC<HtmlToPdfConverterProps> = ({ isDarkMode }) => {
     const [htmlContent, setHtmlContent] = useState<string>(`<!DOCTYPE html>
 <html>
 <head>
